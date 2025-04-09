@@ -1,8 +1,11 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="DemoWebShopSuite">
-    <test name="RegisterTests">
+    <test name="DemoShopFlow">
         <classes>
             <class name="com.demo.qa.tests.RegisterTest"/>
+            <class name="com.demo.qa.tests.LoginTest"/>
+            <class name="com.demo.qa.tests.ComputersTest"/>
+            <class name="com.demo.qa.tests.CheckoutTest"/>
         </classes>
     </test>
 </suite>
