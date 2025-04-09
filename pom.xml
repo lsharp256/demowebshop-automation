@@ -11,6 +11,9 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <selenium.browser>chrome</selenium.browser>
+        <selenium.headless>true</selenium.headless>
     </properties>
 
     <dependencies>
@@ -55,9 +58,18 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
+                    <!-- Pass Selenium properties to tests -->
+                    <systemPropertyVariables>
+                        <selenium.browser>${selenium.browser}</selenium.browser>
+                        <selenium.headless>${selenium.headless}</selenium.headless>
+                    </systemPropertyVariables>
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <!-- Add this to help with forked JVM issues -->
+                    <argLine>-Xmx1024m</argLine>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
         </plugins>
