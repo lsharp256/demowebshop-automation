@@ -40,7 +40,7 @@ jobs:
         run: mvn clean test -Dselenium.browser=chrome -Dselenium.headless=true
 
       - name: Upload screenshots (on failure)
-        if: failure()
+        if: ${{ failure() }}
         uses: actions/upload-artifact@v3
         with:
           name: failed-screenshots
