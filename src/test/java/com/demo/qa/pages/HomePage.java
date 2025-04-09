@@ -15,4 +15,12 @@ public class HomePage {
     public void clickRegister() {
         driver.findElement(registerLink).click();
     }
+
+    private By computersTab = By.linkText("Computers");
+    private By desktopsLink = By.linkText("Desktops");
+
+    public void navigateToDesktops() {
+        driver.findElement(computersTab).click();
+        driver.findElement(desktopsLink).click();
+    }
 }
