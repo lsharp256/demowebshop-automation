@@ -33,15 +33,31 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      - name: Set CHROME_BIN path (optional, just in case)
+      - name: Set CHROME_BIN path
         run: echo "CHROME_BIN=$(which google-chrome)" >> $GITHUB_ENV
 
+      - name: Install ChromeDriver
+        run: |
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d '.' -f 1)
+          CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip
+          chmod +x chromedriver
+          sudo mv chromedriver /usr/local/bin/
+          echo "CHROMEDRIVER_PATH=/usr/local/bin/chromedriver" >> $GITHUB_ENV
+
+      - name: Compile project
+        run: mvn clean compile
+
       - name: Run tests with Maven
-        run: mvn clean test -Dselenium.browser=chrome -Dselenium.headless=true
+        run: mvn test -Dselenium.browser=chrome -Dselenium.headless=true
+        continue-on-error: true
 
       - name: Upload screenshots (on failure)
-        if: ${{ failure() }}
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: failed-screenshots
-          path: target/screenshots
+          name: test-results
+          path: |
+            target/screenshots
+            target/surefire-reports

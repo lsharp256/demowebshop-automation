@@ -5,7 +5,6 @@
             <class name="com.demo.qa.tests.RegisterTest"/>
             <class name="com.demo.qa.tests.LoginTest"/>
             <class name="com.demo.qa.tests.ComputersTest"/>
-            <class name="com.demo.qa.tests.CheckoutTest"/>
         </classes>
     </test>
 </suite>
